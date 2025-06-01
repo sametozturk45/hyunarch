@@ -59,9 +59,9 @@ if [[ ! -f "$DEPENDENCIES_FILE" ]]; then
 fi
 
 get_config_info() {
-    local pkg="$1"
+  local pkg="$1"
     if ! jq -r --arg pkg "$pkg" '
-        to_entries[] | .value[] | select(.PackageName == $pkg) | 
+    to_entries[] | .value[] | select(.PackageName == $pkg) | 
         "\(.ConfigPath)|\(.SystemPath)"' "$DEPENDENCIES_FILE"; then
         log "ERROR" "Yapılandırma bilgisi alınamadı: $pkg"
         return 1
@@ -69,29 +69,29 @@ get_config_info() {
 }
 
 select_category() {
-    local category
+  local category
     if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | gum choose --no-limit --header="🧩 Bir kategori seçin"); then
         log "ERROR" "Kategori seçimi başarısız!"
         return 1
     fi
-    [[ -z "$category" ]] && return
-    select_apps "$category"
+  [[ -z "$category" ]] && return
+  select_apps "$category"
 }
 
 select_apps() {
-    local category="$1"
-    local selected
+  local category="$1"
+  local selected
     if ! selected=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE" | gum choose --no-limit --header="📦 $category kategorisinden uygulama seçin"); then
         log "ERROR" "Uygulama seçimi başarısız!"
         return 1
     fi
 
-    while read -r item; do
-        [[ -z "$item" ]] && continue
-        app=$(echo "$item" | cut -d'|' -f1 | xargs)
-        SELECTED_APPS+=("$app")
+  while read -r item; do
+    [[ -z "$item" ]] && continue
+    app=$(echo "$item" | cut -d'|' -f1 | xargs)
+    SELECTED_APPS+=("$app")
         log "INFO" "✅ $app seçildi"
-    done <<< "$selected"
+  done <<< "$selected"
 }
 
 install_selected() {
@@ -101,7 +101,7 @@ install_selected() {
     fi
 
     log "INFO" "🚀 Seçilen uygulamalar yükleniyor..."
-    for app in "${SELECTED_APPS[@]}"; do
+  for app in "${SELECTED_APPS[@]}"; do
         log "INFO" "📦 $app yükleniyor..."
         
         if ! yay -S --noconfirm "$app"; then
@@ -109,15 +109,15 @@ install_selected() {
             continue
         fi
 
-        config_info=$(get_config_info "$app")
+    config_info=$(get_config_info "$app")
         if [[ $? -ne 0 ]]; then
             continue
         fi
 
-        config_path=$(echo "$config_info" | cut -d'|' -f1)
-        system_path=$(echo "$config_info" | cut -d'|' -f2)
+    config_path=$(echo "$config_info" | cut -d'|' -f1)
+    system_path=$(echo "$config_info" | cut -d'|' -f2)
 
-        if [[ "$config_path" != "null" && "$system_path" != "null" ]]; then
+    if [[ "$config_path" != "null" && "$system_path" != "null" ]]; then
             log "INFO" "⚙️  Config uygulanıyor: $config_path → $system_path"
             
             # Yapılandırma dizininin varlığını kontrol et
@@ -139,15 +139,15 @@ install_selected() {
             }
 
             log "SUCCESS" "✅ $app yapılandırması başarıyla uygulandı."
-        fi
-    done
+    fi
+  done
 }
 
 # Ana menü
 show_menu() {
-    clear
+clear
     log "INFO" "📦 Aşağıdaki menüyü kullanarak sisteminize yüklemek isteyeceğiniz uygulamaları seçebilir ve sisteminizi özelleştirebilirsiniz."
-    echo
+echo
     log "INFO" "🛠️  Bu paketler sistemin stabil çalışması için gereklidir:"
     if ! jq -r '.["Zorunlu"][] | "- \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE"; then
         log "ERROR" "Zorunlu paketler listelenemedi!"
@@ -155,15 +155,15 @@ show_menu() {
     fi
     echo
     log "INFO" "⏬ Devam etmek için seçim menüsüne geçiliyor..."
-    sleep 2
+sleep 2
 
-    while true; do
+while true; do
         if ! action=$(gum choose "📁 Kategori Seç" "🚀 Kurulumu Başlat" "❌ Çık"); then
             log "ERROR" "Menü seçimi başarısız!"
             exit 1
         fi
 
-        case "$action" in
+  case "$action" in
             "📁 Kategori Seç") 
                 if ! select_category; then
                     log "ERROR" "Kategori seçimi başarısız!"
@@ -181,8 +181,8 @@ show_menu() {
                 log "INFO" "👋 Program sonlandırılıyor..."
                 exit 0 
                 ;;
-        esac
-    done
+  esac
+done
 }
 
 # Ana programı başlat

@@ -68,14 +68,27 @@ fi
 
 # gum kontrolü ve kurulumu
 if ! command -v gum &> /dev/null; then
-    log "INFO" "📦 gum yüklü değil. Kuruluyor..."
-    yay -S --noconfirm gum-bin || yay -S --noconfirm gum
-    export PATH="/usr/bin:$PATH"
-    if ! command -v gum &> /dev/null; then
-        log "ERROR" "gum kurulumu başarısız veya PATH'e eklenemedi! Lütfen /usr/bin dizinini PATH'e ekleyin veya yeni bir terminal açın."
+    log "INFO" "📦 gum yüklü değil. Binary olarak indiriliyor..."
+    GUM_VERSION="0.14.0"
+    ARCH=$(uname -m)
+    if [[ $ARCH == "x86_64" ]]; then
+        ARCH="x86_64"
+    elif [[ $ARCH == "aarch64" ]]; then
+        ARCH="arm64"
+    else
+        log "ERROR" "Bu mimari için otomatik gum kurulumu desteklenmiyor: $ARCH"
         exit 1
     fi
-    log "SUCCESS" "✅ gum başarıyla kuruldu."
+    curl -L -o /tmp/gum.tar.gz "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_${ARCH}.tar.gz"
+    tar -xzf /tmp/gum.tar.gz -C /tmp
+    sudo mv /tmp/gum /usr/bin/gum
+    sudo chmod +x /usr/bin/gum
+    rm /tmp/gum.tar.gz
+    if ! command -v gum &> /dev/null; then
+        log "ERROR" "gum kurulumu başarısız! Lütfen elle kontrol edin."
+        exit 1
+    fi
+    log "SUCCESS" "✅ gum başarıyla kuruldu (binary olarak)."
 else
     log "INFO" "✅ gum zaten yüklü."
 fi
