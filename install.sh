@@ -65,9 +65,22 @@ fi
 # gum kontrolü ve kurulumu
 if ! command -v gum &> /dev/null; then
     log "INFO" "📦 gum yüklü değil. Kuruluyor..."
-    if ! yay -S --noconfirm gum; then
+    if ! command -v go &> /dev/null; then
+        log "INFO" "📦 Go yüklü değil. Kuruluyor..."
+        if ! sudo pacman -S --noconfirm go; then
+            log "ERROR" "Go kurulumu başarısız!"
+            exit 1
+        fi
+    fi
+    if ! go install github.com/charmbracelet/gum@latest; then
         log "ERROR" "gum kurulumu başarısız!"
         exit 1
+    fi
+    # Go binary path'ini PATH'e ekle
+    if [[ ":$PATH:" != *":$HOME/go/bin:"* ]]; then
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.bashrc
+        echo 'export PATH="$HOME/go/bin:$PATH"' >> ~/.zshrc
+        export PATH="$HOME/go/bin:$PATH"
     fi
     log "SUCCESS" "✅ gum başarıyla kuruldu."
 else
