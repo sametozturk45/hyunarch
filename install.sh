@@ -65,49 +65,11 @@ fi
 # gum kontrolü ve kurulumu
 if ! command -v gum &> /dev/null; then
     log "INFO" "📦 gum yüklü değil. Kuruluyor..."
-    if ! command -v go &> /dev/null; then
-        log "INFO" "📦 Go yüklü değil. Kuruluyor..."
-        if ! sudo pacman -S --noconfirm go; then
-            log "ERROR" "Go kurulumu başarısız!"
-            exit 1
-        fi
-    fi
-    
-    # Go kurulumu için gerekli ortam değişkenlerini ayarla
-    export GOPATH="$HOME/go"
-    export PATH="$GOPATH/bin:$PATH"
-    
-    if ! go install github.com/charmbracelet/gum@latest; then
+    if ! yay -S --noconfirm gum-bin; then
         log "ERROR" "gum kurulumu başarısız!"
         exit 1
     fi
-    
-    # Shell yapılandırma dosyalarına PATH ekle
-    for shell_rc in ~/.bashrc ~/.zshrc ~/.config/fish/config.fish; do
-        if [[ -f "$shell_rc" ]]; then
-            if ! grep -q "export GOPATH=\"\$HOME/go\"" "$shell_rc"; then
-                echo 'export GOPATH="$HOME/go"' >> "$shell_rc"
-            fi
-            if ! grep -q "export PATH=\"\$GOPATH/bin:\$PATH\"" "$shell_rc"; then
-                echo 'export PATH="$GOPATH/bin:$PATH"' >> "$shell_rc"
-            fi
-        fi
-    done
-    
-    # Mevcut oturum için PATH'i güncelle
-    export PATH="$GOPATH/bin:$PATH"
-    
-    # Shell'i yeniden yükle
-    if [[ -n "$SHELL" ]]; then
-        case "$SHELL" in
-            */bash) source ~/.bashrc ;;
-            */zsh) source ~/.zshrc ;;
-            */fish) source ~/.config/fish/config.fish ;;
-        esac
-    fi
-    
     log "SUCCESS" "✅ gum başarıyla kuruldu."
-    log "INFO" "Lütfen terminal oturumunuzu yeniden başlatın veya 'source ~/.bashrc' (bash için) veya 'source ~/.zshrc' (zsh için) komutunu çalıştırın."
 else
     log "INFO" "✅ gum zaten yüklü."
 fi
