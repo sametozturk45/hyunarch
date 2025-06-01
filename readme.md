@@ -21,13 +21,14 @@ Bu betik, CachyOS üzerinde Hyprland ortamını tam donanımlı şekilde kurar. 
 
 ## İçerik
 - Hyprland pencere yöneticisi
+- Waybar durum çubuğu
 - Kitty terminali
 - Dolphin dosya yöneticisi
 - Brave tarayıcı (Flatpak)
 - Bitwarden şifre yöneticisi (Flatpak)
 - Spotify müzik çalar (Flatpak)
 - Vesktop Discord istemcisi (Flatpak + plugin desteği)
-- Waybar, dunst, blueman gibi yardımcı uygulamalar
+- Dunst, blueman gibi yardımcı uygulamalar
 - Xbox Gamepad ve Bluetooth kulaklık desteği
 
 ## Kurulum

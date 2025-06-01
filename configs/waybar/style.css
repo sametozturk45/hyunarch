@@ -8,23 +8,28 @@
 }
 
 window#waybar {
-    background-color: rgba(40, 44, 52, 0.8);
+    background-color: rgba(40, 44, 52, 0.95);
     border-bottom: 2px solid #61afef;
     padding: 4px;
 }
 
-#clock,
-#cpu,
-#memory,
-#battery,
-#pulseaudio,
-#network,
-#bluetooth,
-#tray {
-    padding: 0 10px;
-    background-color: rgba(98, 114, 164, 0.2);
-    border-radius: 8px;
+#workspaces {
     margin: 0 4px;
+}
+
+#workspaces button {
+    padding: 4px 6px;
+    margin: 0 2px;
+    background: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+    background: rgba(98, 114, 164, 0.4);
+    box-shadow: inherit;
+    text-shadow: inherit;
 }
 
 #workspaces button.focused {
@@ -33,9 +38,99 @@ window#waybar {
     border-radius: 8px;
 }
 
-#workspaces button {
-    padding: 4px 6px;
-    margin: 0 2px;
-    background: transparent;
-    border: none;
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#window {
+    margin: 0 4px;
+    padding: 0 10px;
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+}
+
+#clock,
+#cpu,
+#memory,
+#temperature,
+#battery,
+#pulseaudio,
+#network,
+#bluetooth,
+#tray,
+#idle_inhibitor,
+#power-profiles-daemon,
+#custom-power,
+#custom-weather {
+    padding: 0 10px;
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+    margin: 0 4px;
+}
+
+#battery.warning {
+    background-color: #f39c12;
+}
+
+#battery.critical {
+    background-color: #e74c3c;
+}
+
+#temperature.critical {
+    background-color: #e74c3c;
+}
+
+#tray {
+    padding-right: 8px;
+    margin-right: 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: #eb4d4b;
+}
+
+#custom-power {
+    margin-right: 8px;
+    padding: 0 12px;
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#custom-power:hover {
+    background-color: rgba(98, 114, 164, 0.4);
+}
+
+#custom-weather {
+    padding: 0 12px;
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+}
+
+#idle_inhibitor {
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+}
+
+#idle_inhibitor.activated {
+    background-color: #61afef;
+    color: #1e2127;
+}
+
+#power-profiles-daemon {
+    background-color: rgba(98, 114, 164, 0.2);
+    border-radius: 8px;
+}
+
+#power-profiles-daemon.performance {
+    background-color: #e74c3c;
+}
+
+#power-profiles-daemon.power-saver {
+    background-color: #2ecc71;
 }

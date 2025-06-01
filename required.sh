@@ -47,6 +47,7 @@ REQUIRED_APPS=(
     "xdg-utils"
     "polkit-kde-agent"
     "network-manager-applet"
+    "waybar"
 )
 
 for app in "${REQUIRED_APPS[@]}"; do

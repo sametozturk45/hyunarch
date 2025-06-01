@@ -4,6 +4,11 @@
             "PackageName": "hyprland",
             "DisplayName": "Hyprland",
             "Description": "Wayland pencere yöneticisi"
+        },
+        {
+            "PackageName": "waybar",
+            "DisplayName": "Waybar",
+            "Description": "Wayland için özelleştirilebilir durum çubuğu"
         }
     ],
     "Görsellik": [

@@ -3,76 +3,16 @@
     "ConfigPath": "configs/hyprland",
     "SystemPath": "~/.config/hypr"
   },
-  "rofi": {
-    "ConfigPath": "configs/rofi",
-    "SystemPath": "~/.config/rofi"
-  },
-  "wofi": {
-    "ConfigPath": "configs/wofi",
-    "SystemPath": "~/.config/wofi"
-  },
-  "neovim": {
-    "ConfigPath": "configs/nvim",
-    "SystemPath": "~/.config/nvim"
-  },
-  "git-delta": {
-    "ConfigPath": "configs/git-delta",
-    "SystemPath": "~/.config/git-delta"
-  },
-  "gitui": {
-    "ConfigPath": "configs/gitui",
-    "SystemPath": "~/.config/gitui"
-  },
-  "vscode": {
-    "ConfigPath": "configs/vscode",
-    "SystemPath": "~/.config/Code"
-  },
-  "brave-bin": {
-    "ConfigPath": "configs/brave",
-    "SystemPath": "~/.config/BraveSoftware/Brave-Browser"
-  },
-  "firefox": {
-    "ConfigPath": "configs/firefox",
-    "SystemPath": "~/.mozilla/firefox"
+  "waybar": {
+    "ConfigPath": "configs/waybar",
+    "SystemPath": "~/.config/waybar"
   },
   "kitty": {
     "ConfigPath": "configs/kitty",
     "SystemPath": "~/.config/kitty"
   },
-  "dolphin": {
-    "ConfigPath": "configs/dolphin",
-    "SystemPath": "~/.config/dolphin"
-  },
   "vesktop": {
     "ConfigPath": "configs/vesktop",
     "SystemPath": "~/.config/vesktop"
-  },
-  "spotify": {
-    "ConfigPath": "configs/spotify",
-    "SystemPath": "~/.config/spotify"
-  },
-  "bitwarden": {
-    "ConfigPath": "configs/bitwarden",
-    "SystemPath": "~/.config/Bitwarden"
-  },
-  "btop": {
-    "ConfigPath": "configs/btop",
-    "SystemPath": "~/.config/btop"
-  },
-  "neofetch": {
-    "ConfigPath": "configs/neofetch",
-    "SystemPath": "~/.config/neofetch"
-  },
-  "fastfetch": {
-    "ConfigPath": "configs/fastfetch",
-    "SystemPath": "~/.config/fastfetch"
-  },
-  "swww": {
-    "ConfigPath": "configs/swww",
-    "SystemPath": "~/.config/swww"
-  },
-  "hyprpaper": {
-    "ConfigPath": "configs/hyprpaper",
-    "SystemPath": "~/.config/hyprpaper"
   }
 }
