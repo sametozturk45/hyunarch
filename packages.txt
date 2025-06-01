@@ -1,0 +1,21 @@
+# Pacman
+kitty
+dolphin
+blueman
+pipewire
+wireplumber
+waybar
+wofi
+mako
+xpadneo-dkms
+bluez
+bluez-utils
+xdg-desktop-portal-hyprland
+
+# AUR
+vesktop
+bitwarden
+brave-bin
+spotify
+grim
+slurp

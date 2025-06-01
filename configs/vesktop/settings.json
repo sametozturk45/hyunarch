@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    "AlwaysAnimate",
+    "RemoveBlockedMessages",
+    "ShowHiddenChannels",
+    "PermissionsViewer",
+    "BetterFolders"
+  ],
+  "settings": {
+    "ShowHiddenChannels": {
+      "showInSidebar": true
+    },
+    "PermissionsViewer": {
+      "showManageChannel": false
+    }
+  }
+}

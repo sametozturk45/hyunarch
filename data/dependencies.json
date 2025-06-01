@@ -1,0 +1,119 @@
+{
+    "Zorunlu": [
+        {
+            "PackageName": "hyprland",
+            "DisplayName": "Hyprland",
+            "Description": "Wayland pencere yöneticisi"
+        }
+    ],
+    "Görsellik": [
+        {
+            "PackageName": "rofi",
+            "DisplayName": "Rofi",
+            "Description": "Uygulama başlatıcı ve pencere değiştirici"
+        },
+        {
+            "PackageName": "wofi",
+            "DisplayName": "Wofi",
+            "Description": "Wayland için uygulama başlatıcı"
+        }
+    ],
+    "Geliştirme": [
+        {
+            "PackageName": "neovim",
+            "DisplayName": "Neovim",
+            "Description": "Gelişmiş metin düzenleyici"
+        },
+        {
+            "PackageName": "git-delta",
+            "DisplayName": "Git Delta",
+            "Description": "Git diff ve log için renkli gösterim"
+        },
+        {
+            "PackageName": "gitui",
+            "DisplayName": "GitUI",
+            "Description": "Git için terminal tabanlı kullanıcı arayüzü"
+        },
+        {
+            "PackageName": "vscode",
+            "DisplayName": "Visual Studio Code",
+            "Description": "Gelişmiş kod editörü"
+        }
+    ],
+    "Tarayıcılar": [
+        {
+            "PackageName": "brave-bin",
+            "DisplayName": "Brave",
+            "Description": "Güvenlik öncelikli tarayıcı"
+        },
+        {
+            "PackageName": "firefox",
+            "DisplayName": "Firefox",
+            "Description": "Mozilla'nın özgür tarayıcısı"
+        }
+    ],
+    "Sistem Araçları": [
+        {
+            "PackageName": "kitty",
+            "DisplayName": "Kitty",
+            "Description": "GPU hızlandırmalı terminal"
+        },
+        {
+            "PackageName": "dolphin",
+            "DisplayName": "Dolphin",
+            "Description": "KDE dosya yöneticisi"
+        }
+    ],
+    "Sohbet": [
+        {
+            "PackageName": "vesktop",
+            "DisplayName": "Vesktop",
+            "Description": "Discord tabanlı sohbet istemcisi"
+        }
+    ],
+    "Müzik": [
+        {
+            "PackageName": "spotify",
+            "DisplayName": "Spotify",
+            "Description": "Müzik dinleme uygulaması"
+        }
+    ],
+    "Güvenlik": [
+        {
+            "PackageName": "bitwarden",
+            "DisplayName": "Bitwarden",
+            "Description": "Parola yöneticisi"
+        }
+    ],
+    "Diğer": [
+        {
+            "PackageName": "btop",
+            "DisplayName": "Btop",
+            "Description": "Sistem izleme aracı"
+        },
+        {
+            "PackageName": "neofetch",
+            "DisplayName": "Neofetch",
+            "Description": "Sistem bilgilerini gösteren araç"
+        },
+        {
+            "PackageName": "fastfetch",
+            "DisplayName": "Fastfetch",
+            "Description": "Hızlı sistem bilgisi gösterimi aracı"
+        }
+    ],
+    "Yardımcı Araçlar": [
+        {
+            "PackageName": "swww",
+            "DisplayName": "Swww",
+            "Description": "Wayland için arka plan yöneticisi"
+        }
+    ],
+    "Yönetim": [
+        {
+            "PackageName": "hyprpaper",
+            "DisplayName": "Hyprpaper",
+            "Description": "Hyprland için dinamik arka plan yöneticisi"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+// config.jsonc
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right": ["pulseaudio", "bluetooth", "network", "cpu", "memory", "battery", "tray"],
+
+  "clock": {
+    "format": "%A %d %B | %H:%M"
+  },
+
+  "pulseaudio": {
+    "scroll-step": 5,
+    "format": "  {volume}%"
+  },
+
+  "bluetooth": {
+    "format": " {status}"
+  },
+
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "󰈀  {ip}"
+  },
+
+  "cpu": {
+    "format": " {usage}%"
+  },
+
+  "memory": {
+    "format": " {used:0.1f}G"
+  },
+
+  "battery": {
+    "format": "  {capacity}%"
+  }
+}
