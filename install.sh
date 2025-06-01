@@ -55,6 +55,12 @@ if ! command -v yay &> /dev/null; then
     cd /tmp/yay
     makepkg -si --noconfirm
     cd -
+    # YAY'ın kurulduğu dizini PATH'e ekle
+    export PATH="$HOME/.local/bin:$PATH"
+    if ! command -v yay &> /dev/null; then
+        log "ERROR" "yay kurulumu başarısız veya PATH'e eklenemedi! Lütfen ~/.local/bin dizinini PATH'e ekleyin veya yeni bir terminal açın."
+        exit 1
+    fi
     log "SUCCESS" "✅ yay başarıyla kuruldu."
 else
     log "INFO" "✅ yay zaten yüklü."
@@ -66,7 +72,7 @@ if ! command -v gum &> /dev/null; then
     yay -S --noconfirm gum-bin || yay -S --noconfirm gum
     export PATH="/usr/bin:$PATH"
     if ! command -v gum &> /dev/null; then
-        log "ERROR" "gum kurulumu başarısız veya PATH'e eklenemedi!"
+        log "ERROR" "gum kurulumu başarısız veya PATH'e eklenemedi! Lütfen /usr/bin dizinini PATH'e ekleyin veya yeni bir terminal açın."
         exit 1
     fi
     log "SUCCESS" "✅ gum başarıyla kuruldu."
