@@ -63,7 +63,31 @@ fi
 if ! command -v gum &> /dev/null; then
     log "INFO" "📦 gum yüklü değil. Kuruluyor..."
     yay -S --noconfirm gum-bin || yay -S --noconfirm gum
+
+    # Gum'un kurulduğu yeri bul ve PATH'e ekle
+    GUM_PATH=$(command -v gum || echo "")
+    if [[ -n "$GUM_PATH" ]]; then
+        GUM_DIR=$(dirname "$GUM_PATH")
+        if [[ ":$PATH:" != *":$GUM_DIR:"* ]]; then
+            if grep -q fish <<< "$SHELL"; then
+                # Fish için
+                if ! grep -q "$GUM_DIR" ~/.config/fish/config.fish 2>/dev/null; then
+                    echo "set -Ux PATH $GUM_DIR \$PATH" >> ~/.config/fish/config.fish
+                fi
+            else
+                # Bash/Zsh için
+                for shell_rc in ~/.bashrc ~/.zshrc; do
+                    if [[ -f "$shell_rc" ]] && ! grep -q "$GUM_DIR" "$shell_rc"; then
+                        echo "export PATH=\"$GUM_DIR:\$PATH\"" >> "$shell_rc"
+                    fi
+                done
+            fi
+            export PATH="$GUM_DIR:$PATH"
+        fi
+    fi
+
     log "SUCCESS" "✅ gum başarıyla kuruldu."
+    log "INFO" "Lütfen terminal oturumunuzu yeniden başlatın veya shell yapılandırma dosyanızı (ör: source ~/.config/fish/config.fish) yükleyin."
 else
     log "INFO" "✅ gum zaten yüklü."
 fi
