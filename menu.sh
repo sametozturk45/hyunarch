@@ -4,6 +4,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Scriptin bulunduğu dizine git
+cd "$(dirname "$(realpath "$0")")"
+
 # Renk tanımlamaları
 RED='\033[0;31m'
 GREEN='\033[0;32m'

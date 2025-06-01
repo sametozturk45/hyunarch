@@ -3,6 +3,10 @@
 # Hata yönetimi ve güvenlik ayarları
 set -euo pipefail
 IFS=$'\n\t'
+
+# Scriptin bulunduğu dizine git
+cd "$(dirname "$(realpath "$0")")"
+
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:$PATH"
 
 # Renk tanımlamaları
