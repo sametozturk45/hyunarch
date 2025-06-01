@@ -49,14 +49,11 @@ log "INFO" "🔧 Yardımcı araçlar kontrol ediliyor..."
 # yay kontrolü ve kurulumu
 if ! command -v yay &> /dev/null; then
     log "INFO" "📦 yay yüklü değil. Kuruluyor..."
-    if ! git clone https://aur.archlinux.org/yay.git /tmp/yay; then
-        log "ERROR" "yay kaynak kodu indirilemedi!"
-        exit 1
-    fi
-    if ! (cd /tmp/yay && makepkg -si --noconfirm); then
-        log "ERROR" "yay kurulumu başarısız!"
-        exit 1
-    fi
+    sudo pacman -S --needed --noconfirm git base-devel
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    cd /tmp/yay
+    makepkg -si --noconfirm
+    cd -
     log "SUCCESS" "✅ yay başarıyla kuruldu."
 else
     log "INFO" "✅ yay zaten yüklü."
@@ -65,13 +62,43 @@ fi
 # gum kontrolü ve kurulumu
 if ! command -v gum &> /dev/null; then
     log "INFO" "📦 gum yüklü değil. Kuruluyor..."
-    if ! yay -S --noconfirm gum-bin; then
-        log "ERROR" "gum kurulumu başarısız!"
-        exit 1
-    fi
+    yay -S --noconfirm gum-bin || yay -S --noconfirm gum
     log "SUCCESS" "✅ gum başarıyla kuruldu."
 else
     log "INFO" "✅ gum zaten yüklü."
+fi
+
+# Fish shell için PATH ayarı
+if grep -q fish <<< "$SHELL"; then
+    if ! string match -q -- "$HOME/.local/bin" $PATH; 
+        set -Ux PATH $HOME/.local/bin $PATH
+    end
+    if ! string match -q -- "/usr/local/bin" $PATH;
+        set -Ux PATH /usr/local/bin $PATH
+    end
+    if ! string match -q -- "/usr/bin" $PATH;
+        set -Ux PATH /usr/bin $PATH
+    end
+    if ! string match -q -- "$HOME/go/bin" $PATH;
+        set -Ux PATH $HOME/go/bin $PATH
+    end
+    log "INFO" "Fish shell için PATH ayarlandı."
+fi
+
+# Bash/Zsh için PATH ayarı
+if grep -qE 'bash|zsh' <<< "$SHELL"; then
+    for shell_rc in ~/.bashrc ~/.zshrc; do
+        if [[ -f "$shell_rc" ]]; then
+            if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' "$shell_rc"; then
+                echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$shell_rc"
+            fi
+            if ! grep -q 'export PATH="$HOME/go/bin:$PATH"' "$shell_rc"; then
+                echo 'export PATH="$HOME/go/bin:$PATH"' >> "$shell_rc"
+            fi
+        fi
+    done
+    export PATH="$HOME/.local/bin:$HOME/go/bin:$PATH"
+    log "INFO" "Bash/Zsh için PATH ayarlandı."
 fi
 
 # Zorunlu kurulumları yap
