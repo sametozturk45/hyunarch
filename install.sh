@@ -79,7 +79,10 @@ if ! command -v gum &> /dev/null; then
     curl -L -o /tmp/gum.tar.gz "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_${ARCH}.tar.gz"
     tar -xzf /tmp/gum.tar.gz -C /tmp
     # Çıkan binary'nin tam yolunu bul
-    GUM_PATH=$(find /tmp -type f -name gum -perm -u+x 2>/dev/null | head -n 1)
+    if ! GUM_PATH=$(sudo find /tmp -type f -name gum -perm -u+x 2>/dev/null | head -n 1); then
+        log "ERROR" "Gum pathi bulunamadı."
+        exit 1
+    fi
     if [[ -z "$GUM_PATH" ]]; then
         log "ERROR" "gum binary'si arşivden çıkarılamadı!"
         exit 1
