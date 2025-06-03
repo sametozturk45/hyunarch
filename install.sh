@@ -76,25 +76,31 @@ if ! command -v gum &> /dev/null; then
         log "ERROR" "Bu mimari için otomatik gum kurulumu desteklenmiyor: $ARCH"
         exit 1
     fi
+
     curl -L -o /tmp/gum.tar.gz "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_${ARCH}.tar.gz"
     tar -xzf /tmp/gum.tar.gz -C /tmp
+
     # Çıkan binary'nin tam yolunu bul
     if ! GUM_PATH=$(sudo find /tmp -type f -name gum -perm -u+x 2>/dev/null | head -n 1); then
         log "ERROR" "Gum pathi bulunamadı."
         exit 1
     fi
+
     if [[ -z "$GUM_PATH" ]]; then
         log "ERROR" "gum binary'si arşivden çıkarılamadı!"
         exit 1
     fi
+
     if ! sudo mv "$GUM_PATH" /usr/bin/gum; then
         log "ERROR" "gum binary'si /usr/bin dizinine taşınamadı! Yetki hatası."
         exit 1
     fi
+
     if ! sudo chmod +x /usr/bin/gum; then
         log "ERROR" "gum binary'sine çalıştırma izni verilemedi! Yetki hatası."
         exit 1
     fi
+
     if ! sudo rm /tmp/gum.tar.gz; then
         log "ERROR" "gum arşivi silinemedi!."
         exit 1
@@ -109,16 +115,16 @@ fi
 if grep -q fish <<< "$SHELL"; then
     if ! string match -q -- "$HOME/.local/bin" $PATH; 
         set -Ux PATH $HOME/.local/bin $PATH
-    end
+    fi
     if ! string match -q -- "/usr/local/bin" $PATH;
         set -Ux PATH /usr/local/bin $PATH
-    end
+    fi
     if ! string match -q -- "/usr/bin" $PATH;
         set -Ux PATH /usr/bin $PATH
-    end
+    fi
     if ! string match -q -- "$HOME/go/bin" $PATH;
         set -Ux PATH $HOME/go/bin $PATH
-    end
+    fi
     log "INFO" "Fish shell için PATH ayarlandı."
 fi
 
