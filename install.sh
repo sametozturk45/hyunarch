@@ -45,12 +45,6 @@ for script in "./scripts/helpers.sh" "./menu.sh" "./scripts/hyprland-startup-con
     fi
 done
 
-# Yardımcı betikleri yükle
-source ./scripts/helpers.sh
-source ./menu.sh
-
-log "INFO" "🔧 Yardımcı araçlar kontrol ediliyor..."
-
 # yay kontrolü ve kurulumu
 if ! command -v yay &> /dev/null; then
     log "INFO" "📦 yay yüklü değil. Kuruluyor..."
@@ -139,6 +133,12 @@ if ! ./scripts/required.sh; then
     log "ERROR" "Zorunlu kurulumlar başarısız!"
     exit 1
 fi
+
+# Yardımcı betikleri yükle
+source ./scripts/helpers.sh
+source ./menu.sh
+
+log "INFO" "🔧 Yardımcı araçlar kontrol ediliyor..."
 
 # Menü ve kullanıcı seçimi
 if [[ ! -x "menu.sh" ]]; then
