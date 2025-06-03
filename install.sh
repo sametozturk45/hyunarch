@@ -92,7 +92,7 @@ if ! command -v gum &> /dev/null; then
         log "ERROR" "gum binary'sine çalıştırma izni verilemedi! Yetki hatası."
         exit 1
     fi
-    if ! sudo rm /tmp/gum.tar.gz then
+    if ! sudo rm /tmp/gum.tar.gz; then
         log "ERROR" "gum arşivi silinemedi!."
         exit 1
     fi
