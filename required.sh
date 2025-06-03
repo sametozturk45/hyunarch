@@ -13,6 +13,17 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+# Dependencies ve AppConfig dosyalarının varlığını kontrol et
+if [[ ! -f "data/dependencies.json" ]]; then
+    log "ERROR" "dependencies.json dosyası bulunamadı!"
+    exit 1
+fi
+
+if [[ ! -f "data/appconfig.json" ]]; then
+    log "ERROR" "appconfig.json dosyası bulunamadı!"
+    exit 1
+fi
+
 # Log fonksiyonu
 log() {
     local level=$1
@@ -35,73 +46,78 @@ if [[ $EUID -eq 0 ]]; then
     exit 1
 fi
 
-# group-map.json dosyasının varlığını kontrol et
-if [[ ! -f "group-map.json" ]]; then
-    log "ERROR" "group-map.json dosyası bulunamadı!"
-    exit 1
+# jq'yu yükle (eğer yoksa)
+if ! command -v jq &> /dev/null; then
+    log "INFO" "📦 jq yükleniyor..."
+    if ! yay -S --noconfirm jq; then
+        log "ERROR" "jq kurulumu başarısız!"
+        exit 1
+    fi
 fi
 
 log "INFO" "📌 Zorunlu bağımlılıklar kuruluyor..."
 
-REQUIRED_APPS=(
-    "hyprland"
-    "xdg-desktop-portal-hyprland"
-    "xdg-desktop-portal"
-    "xdg-utils"
-    "polkit-kde-agent"
-    "network-manager-applet"
-    "waybar"
-)
+# Zorunlu paketleri dependencies.json'dan al
+REQUIRED_PACKAGES=$(jq -r '.Zorunlu[] | .PackageName' data/dependencies.json)
 
-for app in "${REQUIRED_APPS[@]}"; do
-    log "INFO" "📦 $app yükleniyor..."
+if [[ -z "$REQUIRED_PACKAGES" ]]; then
+    log "ERROR" "Zorunlu paketler dependencies.json'dan okunamadı!"
+    exit 1
+fi
+
+# Her zorunlu paketi kur ve yapılandır
+echo "$REQUIRED_PACKAGES" | while read -r package; do
+    log "INFO" "📦 $package yükleniyor..."
     
-    if ! yay -S --noconfirm "$app"; then
-        log "ERROR" "$app kurulumu başarısız!"
-        exit 1
+    if ! yay -S --noconfirm "$package"; then
+        log "ERROR" "$package kurulumu başarısız!"
+        continue
     fi
 
-    # jq komutunun varlığını kontrol et
-    if ! command -v jq &> /dev/null; then
-        log "ERROR" "jq komutu bulunamadı!"
-        exit 1
-    fi
+    # Yapılandırma bilgisini appconfig.json'dan al
+    config_info=$(jq -r --arg pkg "$package" '.[$pkg] | "\(.ConfigPath)|\(.SystemPath)"' data/appconfig.json)
 
-    config_info=$(jq -r --arg pkg "$app" '
-        to_entries[] | .value[] | select(.PackageName == $pkg) |
-        "\(.ConfigPath)|\(.SystemPath)"' group-map.json)
-
-    if [[ $? -ne 0 ]]; then
-        log "ERROR" "Yapılandırma bilgisi alınamadı: $app"
+    # Eğer config_info boş veya null ise, sonraki pakete geç
+    if [[ -z "$config_info" || "$config_info" == "null|null" ]]; then
+        log "INFO" "⚙️ $package için yapılandırma gerekmiyor, devam ediliyor..."
         continue
     fi
 
     config_path=$(echo "$config_info" | cut -d'|' -f1)
     system_path=$(echo "$config_info" | cut -d'|' -f2)
 
-    if [[ "$config_path" != "null" && "$system_path" != "null" ]]; then
-        log "INFO" "⚙️  $app yapılandırması uygulanıyor..."
+    if [[ -n "$config_path" && -n "$system_path" ]]; then
+        log "INFO" "⚙️ $package yapılandırması uygulanıyor..."
         
         # Yapılandırma dizininin varlığını kontrol et
         if [[ ! -d "$config_path" ]]; then
             log "WARNING" "$config_path dizini bulunamadı, atlanıyor..."
             continue
-        }
+        fi
+
+        # ~ karakterini $HOME ile değiştir
+        system_path="${system_path/#\~/$HOME}"
 
         # Hedef dizini oluştur
-        if ! mkdir -p "$(eval echo $system_path)"; then
+        if ! mkdir -p "$system_path"; then
             log "ERROR" "Hedef dizin oluşturulamadı: $system_path"
             continue
-        }
+        fi
 
         # Dosyaları kopyala
-        if ! cp -r "$config_path/." "$(eval echo $system_path)"; then
-            log "ERROR" "Yapılandırma dosyaları kopyalanamadı: $app"
+        if ! cp -r "$config_path/." "$system_path/"; then
+            log "ERROR" "Yapılandırma dosyaları kopyalanamadı: $package"
             continue
-        }
+        fi
 
-        log "SUCCESS" "✅ $app yapılandırması başarıyla uygulandı."
+        log "SUCCESS" "✅ $package yapılandırması başarıyla uygulandı."
+    else
+        log "WARNING" "$package için geçerli yapılandırma yolları bulunamadı."
     fi
+
+    # Paket kurulumu başarılı oldu
+    log "SUCCESS" "✅ $package başarıyla kuruldu."
 done
 
-log "SUCCESS" "✅ Tüm zorunlu bağımlılıklar başarıyla kuruldu ve yapılandırıldı."
+# Tüm zorunlu kurulumlar tamamlandı
+log "SUCCESS" "✅ Tüm zorunlu kurulumlar tamamlandı."
