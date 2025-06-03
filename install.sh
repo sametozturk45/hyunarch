@@ -134,8 +134,8 @@ if grep -qE 'bash|zsh' <<< "$SHELL"; then
 fi
 
 # Zorunlu kurulumları yap
-if [[ ! -x "scripts/required.sh" ]]; then
-    chmod +x scripts/required.sh
+if [[ ! -x "./scripts/required.sh" ]]; then
+    chmod +x ./scripts/required.sh
 fi
 
 if ! ./scripts/required.sh; then
