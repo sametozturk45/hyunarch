@@ -63,8 +63,7 @@ if ! command -v yay &> /dev/null; then
 else
     log "INFO" "✅ yay zaten yüklü."
 fi
-
-# gum kontrolü ve kurulumu
+# Gum kontrolü ve kurulumu
 if ! command -v gum &> /dev/null; then
     log "INFO" "📦 gum yüklü değil. Binary olarak indiriliyor..."
     GUM_VERSION="0.14.0"
@@ -79,7 +78,13 @@ if ! command -v gum &> /dev/null; then
     fi
     curl -L -o /tmp/gum.tar.gz "https://github.com/charmbracelet/gum/releases/download/v${GUM_VERSION}/gum_${GUM_VERSION}_Linux_${ARCH}.tar.gz"
     tar -xzf /tmp/gum.tar.gz -C /tmp
-    sudo mv /tmp/gum /usr/bin/gum
+    # Çıkan binary'nin tam yolunu bul
+    GUM_PATH=$(find /tmp -type f -name gum -perm -u+x | head -n 1)
+    if [[ -z "$GUM_PATH" ]]; then
+        log "ERROR" "gum binary'si arşivden çıkarılamadı!"
+        exit 1
+    fi
+    sudo mv "$GUM_PATH" /usr/bin/gum
     sudo chmod +x /usr/bin/gum
     rm /tmp/gum.tar.gz
     if ! command -v gum &> /dev/null; then
