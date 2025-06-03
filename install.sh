@@ -138,7 +138,7 @@ if [[ ! -x "./required.sh" ]]; then
     chmod +x ./required.sh
 fi
 
-if ! ./required.sh; then
+if ! bash ./required.sh; then
     log "ERROR" "Zorunlu kurulumlar başarısız!"
     exit 1
 fi
