@@ -113,19 +113,8 @@ fi
 
 # Fish shell için PATH ayarı
 if grep -q fish <<< "$SHELL"; then
-    if ! string match -q -- "$HOME/.local/bin" $PATH; then
-        set -Ux PATH $HOME/.local/bin $PATH
-    end
-    if ! string match -q -- "/usr/local/bin" $PATH; then
-        set -Ux PATH /usr/local/bin $PATH
-    end
-    if ! string match -q -- "/usr/bin" $PATH; then
-        set -Ux PATH /usr/bin $PATH
-    end
-    if ! string match -q -- "$HOME/go/bin" $PATH; then
-        set -Ux PATH $HOME/go/bin $PATH
-    end
-    log "INFO" "Fish shell için PATH ayarlandı."
+    chmod +x scripts/setup_fish_path.fish
+    fish scripts/setup_fish_path.fish
 fi
 
 # Bash/Zsh için PATH ayarı
