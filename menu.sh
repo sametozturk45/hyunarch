@@ -131,7 +131,7 @@ install_selected() {
             if ! mkdir -p "$(eval echo $system_path)"; then
                 log "ERROR" "Hedef dizin oluşturulamadı: $system_path"
                 continue
-            }
+            fi
 
             # Dosyaları kopyala
             if ! cp -r "$config_path/." "$(eval echo $system_path)"; then
