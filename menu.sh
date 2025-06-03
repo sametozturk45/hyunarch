@@ -44,7 +44,7 @@ fi
 source ./scripts/helpers.sh
 
 # Sabit değişkenler
-DEPENDENCIES_FILE="dependencies.json"
+DEPENDENCIES_FILE="./data/dependencies.json"
 SELECTED_APPS=()
 
 # Gerekli komutların varlığını kontrol et
@@ -62,10 +62,8 @@ if [[ ! -f "$DEPENDENCIES_FILE" ]]; then
 fi
 
 get_config_info() {
-  local pkg="$1"
-    if ! jq -r --arg pkg "$pkg" '
-    to_entries[] | .value[] | select(.PackageName == $pkg) | 
-        "\(.ConfigPath)|\(.SystemPath)"' "$DEPENDENCIES_FILE"; then
+    local pkg="$1"
+    if ! jq -r --arg pkg "$pkg" '.[$pkg] | "\(.ConfigPath)|\(.SystemPath)"' "./data/appconfig.json"; then
         log "ERROR" "Yapılandırma bilgisi alınamadı: $pkg"
         return 1
     fi
@@ -127,7 +125,7 @@ install_selected() {
             if [[ ! -d "$config_path" ]]; then
                 log "WARNING" "$config_path dizini bulunamadı, atlanıyor..."
                 continue
-            }
+            fi
 
             # Hedef dizini oluştur
             if ! mkdir -p "$(eval echo $system_path)"; then
