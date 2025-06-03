@@ -134,11 +134,11 @@ if grep -qE 'bash|zsh' <<< "$SHELL"; then
 fi
 
 # Zorunlu kurulumları yap
-if [[ ! -x "./scripts/required.sh" ]]; then
-    chmod +x ./scripts/required.sh
+if [[ ! -x "./required.sh" ]]; then
+    chmod +x ./required.sh
 fi
 
-if ! ./scripts/required.sh; then
+if ! ./required.sh; then
     log "ERROR" "Zorunlu kurulumlar başarısız!"
     exit 1
 fi
