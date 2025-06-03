@@ -175,6 +175,24 @@ while true; do
                     log "ERROR" "Kurulum başarısız!"
                 else
                     log "SUCCESS" "✅ Kurulum tamamlandı!"
+    
+    # Hyprland otomatik başlatma - Shell'e göre yapılandır
+    log "INFO" "🚀 Hyprland otomatik başlatma yapılandırılıyor..."
+    if grep -q fish <<< "$SHELL"; then
+        chmod +x scripts/hyprland-startup-configuration.fish
+        if ! fish scripts/hyprland-startup-configuration.fish; then
+            log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
+            exit 1
+        fi
+    else
+        chmod +x scripts/hyprland-startup-configuration.sh
+        if ! ./scripts/hyprland-startup-configuration.sh; then
+            log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
+            exit 1
+        fi
+    fi
+
+    log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
                 fi
                 break 
                 ;;
