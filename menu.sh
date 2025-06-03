@@ -137,7 +137,7 @@ install_selected() {
             if ! cp -r "$config_path/." "$(eval echo $system_path)"; then
                 log "ERROR" "Yapılandırma dosyaları kopyalanamadı: $app"
                 continue
-            }
+            fi
 
             log "SUCCESS" "✅ $app yapılandırması başarıyla uygulandı."
     fi
