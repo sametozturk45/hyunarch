@@ -153,10 +153,13 @@ copy_configs() {
     appconfig=$(cat data/appconfig.json)
     
     # SELECTED_PACKAGES dizisinin varlığını kontrol et
-    if [[ -z "${SELECTED_PACKAGES[*]:-}" ]]; then
-        log "ERROR" "Seçili paket listesi boş!"
+    if [[ -z "${SELECTED_PACKAGES+x}" ]]; then
+        log "ERROR" "SELECTED_PACKAGES değişkeni tanımlı değil!"
         return 1
     fi
+
+    # Debug için array içeriğini göster
+    log "DEBUG" "Kopyalanacak paketler: ${SELECTED_PACKAGES[*]}"
     
     for package in "${SELECTED_PACKAGES[@]}"; do
         # Paketi appconfig.json'da ara
@@ -186,7 +189,6 @@ copy_configs() {
 
 # Yardımcı betikleri yükle
 source ./scripts/helpers.sh
-source ./menu.sh
 
 log "INFO" "🔧 Yardımcı araçlar kontrol ediliyor..."
 
@@ -195,14 +197,21 @@ if [[ ! -x "menu.sh" ]]; then
     chmod +x menu.sh
 fi
 
-# Menü scriptini çalıştır ve seçilen paketleri al
-./menu.sh
+# Menü scriptini çalıştır
+source ./menu.sh
+show_menu
 
-# Seçilen paketlerin sayısını kontrol et
-if [[ ${#SELECTED_PACKAGES[@]} -eq 0 ]]; then
-    log "ERROR" "Hiç paket seçilmedi!"
+# Debug: Seçili paketleri kontrol et
+if [[ -z "${SELECTED_PACKAGES+x}" ]]; then
+    log "ERROR" "SELECTED_PACKAGES değişkeni tanımlı değil!"
     exit 1
 fi
+
+log "INFO" "Dizi içeriği kontrol ediliyor..."
+declare -p SELECTED_PACKAGES || {
+    log "ERROR" "SELECTED_PACKAGES dizi olarak tanımlı değil!"
+    exit 1
+}
 
 # Seçili paketleri göster
 log "INFO" "Seçili paketler:"

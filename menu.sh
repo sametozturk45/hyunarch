@@ -100,9 +100,11 @@ install_selected() {
         log "WARNING" "Hiç uygulama seçilmedi!"
         return 1
     fi
-
-    # Seçili uygulamaları global değişken olarak dışarı aktar
-    export SELECTED_PACKAGES=("${SELECTED_APPS[@]}")
+    
+    # Seçili uygulamaları dışarı aktar
+    declare -p SELECTED_APPS > /dev/null # Dizinin tanımlı olduğunu kontrol et
+    SELECTED_PACKAGES=("${SELECTED_APPS[@]}")
+    export SELECTED_PACKAGES
 
     log "INFO" "🚀 Seçilen uygulamalar yükleniyor..."
   for app in "${SELECTED_APPS[@]}"; do
