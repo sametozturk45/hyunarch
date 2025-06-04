@@ -135,13 +135,14 @@ fi
 
 # Zorunlu kurulumları yap
 if [[ ! -x "./required.sh" ]]; then
-    chmod +x ./required.sh
+    chmod +x "./required.sh"
 fi
 
-if ! bash ./required.sh; then
+# Zorunlu kurulumları çalıştır
+bash ./required.sh || { 
     log "ERROR" "Zorunlu kurulumlar başarısız!"
     exit 1
-fi
+}
 
 # Konfigürasyon dosyalarını kopyala
 copy_configs() {
