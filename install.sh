@@ -194,8 +194,12 @@ if [[ ! -x "menu.sh" ]]; then
     chmod +x menu.sh
 fi
 
-if ! ./menu.sh; then
-    log "ERROR" "Menü işlemi başarısız!"
+# Menü scriptini çalıştır ve seçilen paketleri al
+./menu.sh
+
+# Seçilen paketlerin sayısını kontrol et
+if [[ ${#SELECTED_PACKAGES[@]} -eq 0 ]]; then
+    log "ERROR" "Hiç paket seçilmedi!"
     exit 1
 fi
 
