@@ -103,7 +103,6 @@ install_selected() {
 
     # Seçili uygulamaları global değişken olarak dışarı aktar
     export SELECTED_PACKAGES=("${SELECTED_APPS[@]}")
-    fi
 
     log "INFO" "🚀 Seçilen uygulamalar yükleniyor..."
   for app in "${SELECTED_APPS[@]}"; do
@@ -204,11 +203,11 @@ while true; do
                 log "INFO" "👋 Program sonlandırılıyor..."
                 exit 0 
                 ;;
-  esac
-done
+        esac
+    done
 }
 
-# Ana programı başlat
+# Ana menüyü başlat
 show_menu
 
 
