@@ -155,7 +155,7 @@ copy_configs() {
     if [[ ! -f selected_packages.txt ]]; then
         log "ERROR" "Seçili paketler listesi bulunamadı!"
         return 1
-    }
+    fi
     
     while IFS= read -r package; do
         # Paketi appconfig.json'da ara
