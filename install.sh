@@ -199,7 +199,10 @@ if ! ./menu.sh; then
     exit 1
 fi
 
-# Hyprland otomatik başlatma
+# Önce config dosyalarını kopyala
+copy_configs || handle_error $LINENO $?
+
+# Config dosyaları kopyalandıktan sonra Hyprland otomatik başlatma
 if [[ ! -x "scripts/hyprland-startup-configuration.sh" ]]; then
     chmod +x scripts/hyprland-startup-configuration.sh
 fi
@@ -208,9 +211,6 @@ if ! ./scripts/hyprland-startup-configuration.sh; then
     log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
     exit 1
 fi
-
-# Ana kurulum işlemi sırasında config dosyalarını kopyala
-copy_configs || handle_error $LINENO $?
 
 log "SUCCESS" "✅ Kurulum tamamlandı! Sisteminiz artık özelleştirilmiş durumda."
 log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
