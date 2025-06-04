@@ -151,13 +151,13 @@ copy_configs() {
     local appconfig
     appconfig=$(cat data/appconfig.json)
     
-    # Seçili paketleri oku (menu.sh tarafından oluşturulan selected_packages.txt dosyasından)
-    if [[ ! -f selected_packages.txt ]]; then
-        log "ERROR" "Seçili paketler listesi bulunamadı!"
+    # SELECTED_PACKAGES dizisinin varlığını kontrol et
+    if [[ -z "${SELECTED_PACKAGES[*]:-}" ]]; then
+        log "ERROR" "Seçili paket listesi boş!"
         return 1
     fi
     
-    while IFS= read -r package; do
+    for package in "${SELECTED_PACKAGES[@]}"; do
         # Paketi appconfig.json'da ara
         if echo "$appconfig" | jq -e --arg pkg "$package" '.[$pkg]' >/dev/null 2>&1; then
             local config_path
@@ -178,7 +178,7 @@ copy_configs() {
                 log "INFO" "✅ $package konfigürasyonları kopyalandı"
             fi
         fi
-    done < selected_packages.txt
+    done
     
     log "INFO" "✅ Seçili uygulamaların konfigürasyon dosyaları başarıyla kopyalandı"
 }
@@ -199,7 +199,13 @@ if ! ./menu.sh; then
     exit 1
 fi
 
-# Önce config dosyalarını kopyala
+# Seçili paketleri göster
+log "INFO" "Seçili paketler:"
+for package in "${SELECTED_PACKAGES[@]}"; do
+    log "INFO" "- $package"
+done
+
+# Config dosyalarını kopyala
 copy_configs || handle_error $LINENO $?
 
 # Config dosyaları kopyalandıktan sonra Hyprland otomatik başlatma

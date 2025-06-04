@@ -101,6 +101,10 @@ install_selected() {
         return 1
     fi
 
+    # Seçili uygulamaları global değişken olarak dışarı aktar
+    export SELECTED_PACKAGES=("${SELECTED_APPS[@]}")
+    fi
+
     log "INFO" "🚀 Seçilen uygulamalar yükleniyor..."
   for app in "${SELECTED_APPS[@]}"; do
         log "INFO" "📦 $app yükleniyor..."
