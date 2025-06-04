@@ -143,6 +143,46 @@ if ! bash ./required.sh; then
     exit 1
 fi
 
+# Konfigürasyon dosyalarını kopyala
+copy_configs() {
+    log "INFO" "📁 Seçili uygulamaların konfigürasyon dosyaları kopyalanıyor..."
+    
+    # AppConfig dosyasını oku
+    local appconfig
+    appconfig=$(cat data/appconfig.json)
+    
+    # Seçili paketleri oku (menu.sh tarafından oluşturulan selected_packages.txt dosyasından)
+    if [[ ! -f selected_packages.txt ]]; then
+        log "ERROR" "Seçili paketler listesi bulunamadı!"
+        return 1
+    }
+    
+    while IFS= read -r package; do
+        # Paketi appconfig.json'da ara
+        if echo "$appconfig" | jq -e --arg pkg "$package" '.[$pkg]' >/dev/null 2>&1; then
+            local config_path
+            local system_path
+            
+            # ConfigPath ve SystemPath değerlerini al
+            config_path=$(echo "$appconfig" | jq -r --arg pkg "$package" '.[$pkg].ConfigPath')
+            system_path=$(echo "$appconfig" | jq -r --arg pkg "$package" '.[$pkg].SystemPath')
+            
+            # ~ karakterini $HOME ile değiştir
+            system_path="${system_path/#\~/$HOME}"
+            
+            if [[ -d "$config_path" ]]; then
+                log "INFO" "📦 $package için konfigürasyon dosyaları kopyalanıyor..."
+                mkdir -p "$system_path"
+                cp -r "$config_path"/* "$system_path/"
+                chmod -R u+rw "$system_path"
+                log "INFO" "✅ $package konfigürasyonları kopyalandı"
+            fi
+        fi
+    done < selected_packages.txt
+    
+    log "INFO" "✅ Seçili uygulamaların konfigürasyon dosyaları başarıyla kopyalandı"
+}
+
 # Yardımcı betikleri yükle
 source ./scripts/helpers.sh
 source ./menu.sh
@@ -168,6 +208,9 @@ if ! ./scripts/hyprland-startup-configuration.sh; then
     log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
     exit 1
 fi
+
+# Ana kurulum işlemi sırasında config dosyalarını kopyala
+copy_configs || handle_error $LINENO $?
 
 log "SUCCESS" "✅ Kurulum tamamlandı! Sisteminiz artık özelleştirilmiş durumda."
 log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
