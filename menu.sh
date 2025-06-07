@@ -209,7 +209,6 @@ while true; do
 
                 log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
             fi
-            break
             ;;
         3)
             log "INFO" "👋 Program sonlandırılıyor..."
@@ -220,6 +219,86 @@ while true; do
             ;;
     esac
 done
+}
+
+select_category() {
+    clear
+    echo "\nKategori Seçimi:"
+    local categories
+    categories=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE")
+    local i=1
+    for category in $categories; do
+        echo "$i. 📁 $category"
+        ((i++))
+    done
+    echo "$i. 🔙 Geri Dön"
+
+    read -p "Lütfen bir kategori seçin (1-$i): " category_choice
+
+    if [[ "$category_choice" -eq "$i" ]]; then
+        return 0 # Geri dön
+    fi
+
+    local selected_category=$(echo "$categories" | awk -v choice="$category_choice" '{print $choice}')
+
+    if [[ -z "$selected_category" ]]; then
+        log "WARNING" "Geçersiz kategori seçimi!"
+        return 1
+    fi
+
+    select_apps "$selected_category"
+}
+
+select_apps() {
+    clear
+    local category="$1"
+    echo "\nUygulama Seçimi ($category):"
+    local apps
+    apps=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE")
+    local i=1
+    for app in $apps; do
+        local app_name=$(echo "$app" | cut -d'|' -f2)
+        echo "$i. 📦 $app_name"
+        ((i++))
+    done
+    echo "$i. ✅ Seçimi Tamamla ve Geri Dön"
+
+    read -p "Lütfen uygulamaları seçin (1-$((i-1)), virgülle ayırarak): " app_choices
+
+    if [[ -z "$app_choices" ]]; then
+        log "WARNING" "Hiç uygulama seçilmedi!"
+        return 1
+    fi
+
+    if [[ "$app_choices" == *","* ]]; then
+        local IFS=","
+        local app_array=($app_choices)
+        unset IFS
+        for app_choice in "${app_array[@]}"; do
+            local selected_app=$(echo "$apps" | awk -v choice="$app_choice" '{print $choice}')
+            if [[ -z "$selected_app" ]]; then
+                log "WARNING" "Geçersiz uygulama seçimi: $app_choice"
+                continue
+            fi
+            local app_name=$(echo "$selected_app" | cut -d'|' -f1)
+            SELECTED_APPS+=("$app_name")
+            log "INFO" "✅ $app_name seçildi"
+        done
+    else
+        if [[ "$app_choices" -eq "$i" ]]; then
+            return 0 # Seçimi tamamla ve geri dön
+        fi
+        local selected_app=$(echo "$apps" | awk -v choice="$app_choices" '{print $choice}')
+        if [[ -z "$selected_app" ]]; then
+            log "WARNING" "Geçersiz uygulama seçimi!"
+            return 1
+        fi
+        local app_name=$(echo "$selected_app" | cut -d'|' -f1)
+        SELECTED_APPS+=("$app_name")
+        log "INFO" "✅ $app_name seçildi"
+    fi
+
+    return 0 # Seçimi tamamla ve geri dön
 }
 
 # Ana menüyü başlat
