@@ -172,55 +172,54 @@ echo
 sleep 2
 
 while true; do
-        if ! action=$(gum filter --indicator.foreground="2" --match.foreground="2" --header="Ana Menü (Space ile seçin, Enter ile Çık)" <<< $"📁 Kategori Seç\n🚀 Kurulumu Başlat\n❌ Çık"); then
-            if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
-                continue
+    echo "\nAna Menü:"
+    echo "1. 📁 Kategori Seç"
+    echo "2. 🚀 Kurulumu Başlat"
+    echo "3. ❌ Çık"
+
+    read -p "Lütfen bir seçenek girin (1-3): " action
+
+    case "$action" in
+        1)
+            if ! select_category; then
+                log "ERROR" "Kategori seçimi başarısız!"
             fi
-            log "ERROR" "Menü seçimi başarısız!"
-            exit 1
-        fi
+            ;;
+        2)
+            if ! install_selected; then
+                log "ERROR" "Kurulum başarısız!"
+            else
+                log "SUCCESS" "✅ Kurulum tamamlandı!"
 
-  case "$action" in
-            "📁 Kategori Seç")
-                if ! select_category; then
-                    log "ERROR" "Kategori seçimi başarısız!"
-                fi
-                ;;
-            "🚀 Kurulumu Başlat")
-                if ! install_selected; then
-                    log "ERROR" "Kurulum başarısız!"
+                # Hyprland otomatik başlatma - Shell'e göre yapılandır
+                log "INFO" "🚀 Hyprland otomatik başlatma yapılandırılıyor..."
+                if grep -q fish <<< "$SHELL"; then
+                    chmod +x scripts/hyprland-startup-configuration.fish
+                    if ! fish scripts/hyprland-startup-configuration.fish; then
+                        log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
+                        exit 1
+                    fi
                 else
-                    log "SUCCESS" "✅ Kurulum tamamlandı!"
-
-    # Hyprland otomatik başlatma - Shell'e göre yapılandır
-    log "INFO" "🚀 Hyprland otomatik başlatma yapılandırılıyor..."
-    if grep -q fish <<< "$SHELL"; then
-        chmod +x scripts/hyprland-startup-configuration.fish
-        if ! fish scripts/hyprland-startup-configuration.fish; then
-            log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
-            exit 1
-        fi
-    else
-        chmod +x scripts/hyprland-startup-configuration.sh
-        if ! ./scripts/hyprland-startup-configuration.sh; then
-            log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
-            exit 1
-        fi
-    fi
-
-    log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
+                    chmod +x scripts/hyprland-startup-configuration.sh
+                    if ! ./scripts/hyprland-startup-configuration.sh; then
+                        log "ERROR" "Hyprland otomatik başlatma yapılandırması başarısız!"
+                        exit 1
+                    fi
                 fi
-                break
-                ;;
-            "❌ Çık")
-                log "INFO" "👋 Program sonlandırılıyor..."
-                exit 0
-                ;;
-            *)
-                continue
-                ;;
-        esac
-    done
+
+                log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
+            fi
+            break
+            ;;
+        3)
+            log "INFO" "👋 Program sonlandırılıyor..."
+            exit 0
+            ;;
+        *)
+            log "WARNING" "Geçersiz seçenek! Lütfen 1-3 arasında bir sayı girin."
+            ;;
+    esac
+done
 }
 
 # Ana menüyü başlat
