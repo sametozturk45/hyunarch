@@ -71,7 +71,7 @@ get_config_info() {
 
 select_category() {
   local category
-if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | gum filter --placeholder="🔍 Kategori ara..." --indicator.foreground="2" --match.foreground="2" --header="🧩 Bir kategori seçin (Space ile seçin)"); then
+if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | gum filter --indicator.foreground="2" --match.foreground="2" --header="🧩 Bir kategori seçin (Space ile seçin, Enter ile geri gidin)"); then
         if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
             return 0
         fi
@@ -85,7 +85,7 @@ if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | g
 select_apps() {
   local category="$1"
   local selected
-    if ! selected=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE" | gum filter --placeholder="🔍 Uygulama ara..." --indicator.foreground="2" --match.foreground="2" --header="📦 $category kategorisinden uygulamaları seçin (Space ile seçin)"); then
+    if ! selected=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE" | gum filter --indicator.foreground="2" --match.foreground="2" --header="📦 $category kategorisinden uygulamaları seçin (Space ile seçin, Enter ile geri gidin)"); then
         if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
             return 0
         fi
@@ -172,26 +172,27 @@ echo
 sleep 2
 
 while true; do
-        if ! action=$(gum filter --placeholder="🔍 İşlem seç..." --indicator.foreground="2" --match.foreground="2" --header="Ana Menü (Space ile seçin)" <<< $'📁 Kategori Seç\n🚀 Kurulumu Başlat\n❌ Çık'); then
+        if ! action=$(gum filter --indicator.foreground="2" --match.foreground="2" --header="Ana Menü (Space ile seçin, Enter ile Çık)" <<< $"📁 Kategori Seç\n🚀 Kurulumu Başlat\n❌ Çık"); then
             if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
-                continue
+                log "INFO" "Program sonlandırılıyor..."
+                exit 0
             fi
             log "ERROR" "Menü seçimi başarısız!"
             exit 1
         fi
 
   case "$action" in
-            "📁 Kategori Seç") 
+            "📁 Kategori Seç")
                 if ! select_category; then
                     log "ERROR" "Kategori seçimi başarısız!"
                 fi
                 ;;
-            "🚀 Kurulumu Başlat") 
+            "🚀 Kurulumu Başlat")
                 if ! install_selected; then
                     log "ERROR" "Kurulum başarısız!"
                 else
                     log "SUCCESS" "✅ Kurulum tamamlandı!"
-    
+
     # Hyprland otomatik başlatma - Shell'e göre yapılandır
     log "INFO" "🚀 Hyprland otomatik başlatma yapılandırılıyor..."
     if grep -q fish <<< "$SHELL"; then
@@ -210,11 +211,11 @@ while true; do
 
     log "INFO" "Lütfen stabil çalışması için gerekli olan uygulamaları kontrol edin ve sisteminizi yeniden başlatın."
                 fi
-                break 
+                break
                 ;;
-            "❌ Çık") 
+            "❌ Çık")
                 log "INFO" "👋 Program sonlandırılıyor..."
-                exit 0 
+                exit 0
                 ;;
             *)
                 continue
