@@ -174,8 +174,7 @@ sleep 2
 while true; do
         if ! action=$(gum filter --indicator.foreground="2" --match.foreground="2" --header="Ana Menü (Space ile seçin, Enter ile Çık)" <<< $"📁 Kategori Seç\n🚀 Kurulumu Başlat\n❌ Çık"); then
             if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
-                log "INFO" "Program sonlandırılıyor..."
-                exit 0
+                continue
             fi
             log "ERROR" "Menü seçimi başarısız!"
             exit 1
