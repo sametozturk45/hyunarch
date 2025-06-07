@@ -158,6 +158,8 @@ install_selected() {
 # Ana menü
 show_menu() {
 clear
+    # Banner göster
+    cat banner.txt
     log "INFO" "📦 Aşağıdaki menüyü kullanarak sisteminize yüklemek isteyeceğiniz uygulamaları seçebilir ve sisteminizi özelleştirebilirsiniz."
 echo
     log "INFO" "🛠️  Bu paketler sistemin stabil çalışması için gereklidir:"

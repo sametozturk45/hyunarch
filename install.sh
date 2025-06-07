@@ -4,6 +4,9 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Banner göster
+cat banner.txt
+
 # Scriptin bulunduğu dizine git
 cd "$(dirname "$(realpath "$0")")"
 
