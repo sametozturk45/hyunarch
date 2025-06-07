@@ -71,7 +71,7 @@ get_config_info() {
 
 select_category() {
   local category
-    if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | gum filter --placeholder="🔍 Kategori ara..." --indicator.foreground="2" --match.foreground="2" --header="🧩 Bir kategori seçin (Space ile seçin, Enter ile ana menüye dönün)"); then
+if ! category=$(jq -r 'keys[] | select(. != "Zorunlu")' "$DEPENDENCIES_FILE" | gum filter --placeholder="🔍 Kategori ara..." --indicator.foreground="2" --match.foreground="2" --header="🧩 Bir kategori seçin (Space ile seçin)"); then
         if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
             return 0
         fi
@@ -85,7 +85,7 @@ select_category() {
 select_apps() {
   local category="$1"
   local selected
-    if ! selected=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE" | gum filter --no-limit --placeholder="🔍 Uygulama ara..." --indicator.foreground="2" --match.foreground="2" --header="📦 $category kategorisinden uygulamaları seçin (Space ile seçin, Enter ile kategorilere dönün)"); then
+    if ! selected=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE" | gum filter --placeholder="🔍 Uygulama ara..." --indicator.foreground="2" --match.foreground="2" --header="📦 $category kategorisinden uygulamaları seçin (Space ile seçin)"); then
         if [[ $? -eq 130 ]]; then  # Enter tuşu basıldığında
             return 0
         fi
