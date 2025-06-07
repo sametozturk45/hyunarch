@@ -49,6 +49,7 @@ xorg-xwayland
 capitaine-cursors
 kvantum-theme-nordic-git
 bluedevil
+jp2a
 
 #Meowrch Packages
 "inquirer"
