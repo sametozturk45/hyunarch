@@ -255,6 +255,12 @@ select_apps() {
     echo "\nUygulama Seçimi ($category):"
     local apps
     apps=$(jq -r --arg cat "$category" '.[$cat][] | "\(.PackageName) | \(.DisplayName): \(.Description)"' "$DEPENDENCIES_FILE")
+
+    if [[ -z "$apps" ]]; then
+        log "WARNING" "$category kategorisi bulunamadı veya uygulama yok!"
+        return 1
+    fi
+
     local i=1
     for app in $apps; do
         local app_name=$(echo "$app" | cut -d'|' -f2)
