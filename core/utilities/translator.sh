@@ -14,12 +14,12 @@ get_translation() {
     fi
 
     if [ -z "$key" ]; then
-        log ERROR "Key is not defined!"
+        log ERROR "$(get_translation key_not_found)"
         return 1
     fi
 
     if [ ! -f "scriptConfig.json" ]; then
-        log ERROR "scriptConfig.json can't find!"
+        log ERROR "$(get_translation script_config_not_found)"
         return 1
     fi
 
@@ -27,14 +27,14 @@ get_translation() {
     lang=$(jq -r '.language' scriptConfig.json)
 
     if [ -z "$lang" ] || [ "$lang" == "null" ]; then
-        log ERROR "Can't take any language data!"
+        log ERROR "$(get_translation cant_take_any_language_data)"
         return 1
     fi
 
     local translation_file="assets/translations/${lang}.json"
 
     if [ ! -f "$translation_file" ]; then
-        log ERROR "Can't find translation file: $translation_file"
+        log ERROR "$(get_translation cant_find_translation_file): $translation_file"
         return 1
     fi
 
@@ -42,7 +42,7 @@ get_translation() {
     value=$(jq -r --arg key "$key" '.[$key]' "$translation_file")
 
     if [ "$value" == "null" ]; then
-        log WARNING "Key is not defined: $key"
+        log WARNING "$(get_translation translation_key_not_found): $key"
         return 1
     fi
 

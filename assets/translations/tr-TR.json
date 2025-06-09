@@ -1,10 +1,12 @@
 {
     "key_not_found":"Anahtar bulunamadı.",
     "package_manager":"Paket Yöneticisi",
+    "unsupported_package_manager":"Desteklenmeyen paket yöneticisi.",
+    "no_package_manager_specified":"Paket yöneticisi belirtilmedi. Bir tane paket yöneticisi belirtmeniz gerekiyor.",
     "no_package_installation_command_provided":"Paket kurulumu için komut belirtilmedi.",
     "package_manager_not_found":"Paket yöneticisi bulunamadı.",
     "unknown_package_manager":"Bilinmeyen paket yöneticisi.",
-    "package_manager_not_installed":"Paket yöneticisi kurulu değil.",
+    "package_manager_not_installed":"Paket yöneticisi kurulu değil. Lütfen paket yöneticisini kurun veya farklı bir paket yöneticisi kullanın.",
     "no_package_provided":"Paket adı belirtilmedi.",
     "package_already_installed":"paketi zaten kurulu.",
     "package_not_found":"paket bulunamadı.",
@@ -28,5 +30,12 @@
     "package_update_error":"Paket güncellemesi sırasında bir hata oluştu.",
     "package_not_compatible":"Paket, mevcut sistemle uyumlu değil.",
     "package_dependency_error":"Paket bağımlılık hatası.",
-    "package_dependency_not_found":"Paket bağımlılığı bulunamadı."
+    "package_dependency_not_found":"Paket bağımlılığı bulunamadı.",
+    "script_config_not_found":"scriptConfig.json dosyası bulunamadı.",
+    "cant_take_any_language_data":"Herhangi bir dil verisi alınamadı.",
+    "cant_find_translation_file":"Çeviri dosyası bulunamadı.",
+    "translation_key_not_found":"Çeviri anahtarı bulunamadı.",
+    "kitty_is_not_found":"Kitty bulunamadı. Bu nedenle kitty kurulumu başlatılıyor.",
+    "kitty_installation_failed":"Kitty kurulumu başarısız, en iyi deneyim için kitty'i kurup scripti kitty üzerinden başlatmanız tavsiye edilir.",
+    "script_restarting_with_kitty":"Script, Kitty ile başlatılıyor. Lütfen bekleyin..."
 }

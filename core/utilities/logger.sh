@@ -40,6 +40,9 @@ log() {
         PACKAGE_SUCCESS)
             echo -e "${GREEN}[${timestamp}] 📦✅ $message${RESET}"
             ;;
+        PACKAGE_WARNING)
+            echo -e "${YELLOW}[${timestamp}] 📦⚠️ $message${RESET}"
+            ;;
         *)
             echo -e "[${timestamp}] $message"
             ;;

@@ -12,13 +12,13 @@ source ./core/utilities/translator.sh
 install_packages(){
     # Check if a package manager is specified
     if [ -z "$1" ]; then
-        echo "No package manager specified. You must specify one of: apt, yay, yum, dnf, pacman, brew."
+        log ERROR "$(get_translation no_package_manager_specified)"
         return 1
     fi
     
     # Check if the package manager is installed
     if ! command -v "$1" &> /dev/null; then
-        echo "Package manager '$1' is not installed. Please install it first or use a different package manager."
+        log ERROR "$(get_translation package_manager_not_installed): $1"
         return 1
     fi
 
@@ -47,7 +47,7 @@ install_packages(){
         brew install "$@"
         ;;
         *)
-        echo "Unsupported package manager: $package_manager"
+        log ERROR "$(get_translation unsupported_package_manager): $package_manager"
         return 1
         ;;
     esac
