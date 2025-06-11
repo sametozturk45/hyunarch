@@ -1,0 +1,32 @@
+{
+    "yay":{
+        "hasConfigFiles":false,
+        "hasCustomInstallation":true,
+        "installation_commands":[
+            {
+                "packageManager":"pacman",
+                "command":"sudo pacman -S --needed --noconfirm yay"
+            }
+        ]
+    },
+    "hyprland":{
+        "hasConfigFiles":true,
+        "hasCustomInstallation":false,
+        "configFiles":[
+            {
+                "source":"/configurations/wm/hyprland",
+                "target":"/home/$(whoami)/.config/hypr"
+            }
+        ]
+    },
+    "waybar":{
+        "hasConfigFiles":true,
+        "hasCustomInstallation":false,
+        "configFiles":[
+            {
+                "source":"/configurations/bars/waybar",
+                "target":"/home/$(whoami)/.config/waybar"
+            }
+        ]
+    }
+}

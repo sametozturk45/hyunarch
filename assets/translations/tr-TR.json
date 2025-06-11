@@ -37,5 +37,6 @@
     "translation_key_not_found":"Çeviri anahtarı bulunamadı.",
     "kitty_is_not_found":"Kitty bulunamadı. Bu nedenle kitty kurulumu başlatılıyor.",
     "kitty_installation_failed":"Kitty kurulumu başarısız, en iyi deneyim için kitty'i kurup scripti kitty üzerinden başlatmanız tavsiye edilir.",
-    "script_restarting_with_kitty":"Script, Kitty ile başlatılıyor. Lütfen bekleyin..."
+    "script_restarting_with_kitty":"Script, Kitty ile başlatılıyor. Lütfen bekleyin...",
+    "script_should_be_executed_without_sudo_permission":"Scriptin sudo yetkisi verilmeden başlatılması gerekiyor."
 }

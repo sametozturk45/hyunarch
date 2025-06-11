@@ -37,5 +37,6 @@
     "translation_key_not_found": "Translation key not found.",
     "kitty_is_not_found": "Kitty not found. Starting Kitty installation.",
     "kitty_installation_failed": "Kitty installation failed. For the best experience, it is recommended to install Kitty and run the script through it.",
-    "script_restarting_with_kitty": "The script is restarting with Kitty. Please wait..."
+    "script_restarting_with_kitty": "The script is restarting with Kitty. Please wait...",
+    "script_should_be_executed_without_sudo_permission":"This script should be executed without sudo permission."
 }

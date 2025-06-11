@@ -10,12 +10,18 @@ source ./core/utilities/banner.sh
 source ./core/utilities/logger.sh
 source ./core/utilities/translator.sh
 
+# check sudo permission
+if [[ $EUID -eq 0 ]]; then
+    log ERROR "$(get_translation script_should_be_executed_without_sudo_permission)"
+    exit 1
+fi
+
 # Check if terminal is running in kitty
 if [ -z "${KITTY_WINDOW_ID:-}" ]; then
     # Is kitty installed?
     if ! command -v kitty &> /dev/null; then
         log PACKAGE_INFO "$(get_translation kitty_is_not_found)"
-        if ! install_package kitty; then
+        if ! install_initial_dependencies kitty; then
             log PACKAGE_WARNING "$(get_translation kitty_installation_failed)"
         fi
     fi
@@ -33,5 +39,3 @@ if [ -z "${KITTY_WINDOW_ID:-}" ]; then
         exit 0
     fi
 fi
-
-show_banner
