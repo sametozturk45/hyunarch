@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Return to the script's directory
-source ./../../env.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../env.sh"
 
 source $ROOT_DIR/core/utilities/logger.sh
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./../../env.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../env.sh"
 
 log() {
     local type="$1"

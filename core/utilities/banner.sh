@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./../../env.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../env.sh"
 
 show_banner(){
     jp2a --colors --width=80 $ROOT_DIR/assets/static/banner.png
