@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../../env.sh"
-
 log() {
     local type="$1"
     shift

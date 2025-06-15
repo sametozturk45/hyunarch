@@ -5,10 +5,8 @@ set -euo pipefail
 IFS=$'\n\t'
 
 source ./env.sh
-
+echo "Root directory: $ROOT_DIR"
 # Imports
-source $ROOT_DIR/core/managers/packageManager.sh
-source $ROOT_DIR/core/utilities/banner.sh
 source $ROOT_DIR/core/utilities/logger.sh
 source $ROOT_DIR/core/utilities/translator.sh
 
@@ -18,6 +16,7 @@ if [[ $EUID -eq 0 ]]; then
     exit 1
 fi
 
+source $ROOT_DIR/core/managers/packageManager.sh
 # Check if terminal is running in kitty
 if [ -z "${KITTY_WINDOW_ID:-}" ]; then
     # Is kitty installed?
@@ -31,13 +30,15 @@ if [ -z "${KITTY_WINDOW_ID:-}" ]; then
     # Check is kitty installed successfully
     if command -v kitty &> /dev/null; then
         log INFO "$(get_translation script_restarting_with_kitty)"
-        SCRIPT_PATH="$(realpath "$0")"
-        SCRIPT_DIR="$(dirname "$SCRIPT_PATH") "
 
         # Run the script in kitty terminal
-        kitty bash --login -i -c "cd \"$SCRIPT_DIR\" && bash \"$SCRIPT_PATH\"; echo; read -p 'Press any button...'" 2>/dev/null
-
-        # Close existing terminal
-        exit 0
+        exec kitty bash --login -i -c "cd $ROOT_DIR && bash install.sh; echo; read -p 'Press any button...'" 2>/dev/null
     fi
+fi
+
+
+# Check if terminal is running in kitty
+if [ -n "${KITTY_WINDOW_ID:-}" ]; then
+    source $ROOT_DIR/core/utilities/banner.sh
+   show_banner
 fi
