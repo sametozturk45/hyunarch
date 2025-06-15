@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Return to the script's directory
-cd "$(dirname "$(realpath "$0")")"
+source ./../../env.sh
 
 # Imports
-source ./core/utilities/logger.sh
-source ./core/utilities/translator.sh
+source $ROOT_DIR/core/utilities/logger.sh
+source $ROOT_DIR/core/utilities/translator.sh
 
 # Function to install packages using the specified package manager
 # Usage: install_packages <package_manager> <package1> <package2> ...

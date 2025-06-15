@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Return to the script's directory
-cd "$(dirname "$(realpath "$0")")"
+source ./../../env.sh
 
-source ./core/utilities/logger.sh
+source $ROOT_DIR/core/utilities/logger.sh
 
 get_translation() {
     local key="$1"
@@ -31,7 +31,7 @@ get_translation() {
         return 1
     fi
 
-    local translation_file="assets/translations/${lang}.json"
+    local translation_file="$ROOT_DIR/assets/translations/${lang}.json"
 
     if [ ! -f "$translation_file" ]; then
         log ERROR "$(get_translation cant_find_translation_file): $translation_file"

@@ -1,10 +1,9 @@
 #!/bin/bash
 
-# Return to the script's directory
-cd "$(dirname "$(realpath "$0")")"
+source ./../../env.sh
 
 show_banner(){
-    jp2a --colors --width=80 assets/static/banner.png
+    jp2a --colors --width=80 $ROOT_DIR/assets/static/banner.png
     cat << "EOF"
 
                      _    _                                  _     

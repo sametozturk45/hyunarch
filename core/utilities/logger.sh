@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Return to the script's directory
-cd "$(dirname "$(realpath "$0")")"
+source ./../../env.sh
 
 log() {
     local type="$1"

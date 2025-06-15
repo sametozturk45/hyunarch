@@ -4,11 +4,13 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+source ./env.sh
+
 # Imports
-source ./core/managers/packageManager.sh
-source ./core/utilities/banner.sh
-source ./core/utilities/logger.sh
-source ./core/utilities/translator.sh
+source $ROOT_DIR/core/managers/packageManager.sh
+source $ROOT_DIR/core/utilities/banner.sh
+source $ROOT_DIR/core/utilities/logger.sh
+source $ROOT_DIR/core/utilities/translator.sh
 
 # check sudo permission
 if [[ $EUID -eq 0 ]]; then
