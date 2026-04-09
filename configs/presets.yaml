@@ -1,0 +1,18 @@
+presets:
+  - id: hyunarch-hyprland-full
+    display_name: "Hyunarch Hyprland Full Setup"
+    desktop_environments: [hyprland]
+    description: "Complete Hyprland setup with Hyunarch defaults"
+    scripts: ["scripts/presets/hyunarch-hyprland-full.sh"]
+
+  - id: hyunarch-kde-full
+    display_name: "Hyunarch KDE Full Setup"
+    desktop_environments: [kde]
+    description: "Complete KDE Plasma setup with Hyunarch defaults"
+    scripts: ["scripts/presets/hyunarch-kde-full.sh"]
+
+  - id: hyunarch-gnome-full
+    display_name: "Hyunarch GNOME Full Setup"
+    desktop_environments: [gnome]
+    description: "Complete GNOME setup with Hyunarch defaults"
+    scripts: ["scripts/presets/hyunarch-gnome-full.sh"]

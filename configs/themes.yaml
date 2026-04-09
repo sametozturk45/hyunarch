@@ -1,0 +1,24 @@
+themes:
+  - id: catppuccin-hyprland
+    display_name: "Catppuccin (Hyprland)"
+    desktop_environments: [hyprland]
+    description: "Catppuccin color theme for Hyprland"
+    script: "scripts/themes/catppuccin-hyprland.sh"
+
+  - id: catppuccin-kde
+    display_name: "Catppuccin (KDE)"
+    desktop_environments: [kde]
+    description: "Catppuccin color theme for KDE Plasma"
+    script: "scripts/themes/catppuccin-kde.sh"
+
+  - id: catppuccin-gnome
+    display_name: "Catppuccin (GNOME)"
+    desktop_environments: [gnome]
+    description: "Catppuccin color theme for GNOME"
+    script: "scripts/themes/catppuccin-gnome.sh"
+
+  - id: nordic-kde
+    display_name: "Nordic (KDE)"
+    desktop_environments: [kde]
+    description: "Nordic dark theme for KDE Plasma"
+    script: "scripts/themes/nordic-kde.sh"

@@ -1,0 +1,20 @@
+distros:
+  - id: arch
+    display_name: "Arch Linux"
+    supported_package_managers: [pacman, yay, paru]
+    default_package_manager: pacman
+
+  - id: ubuntu
+    display_name: "Ubuntu"
+    supported_package_managers: [apt]
+    default_package_manager: apt
+
+  - id: debian
+    display_name: "Debian"
+    supported_package_managers: [apt]
+    default_package_manager: apt
+
+  - id: fedora
+    display_name: "Fedora"
+    supported_package_managers: [dnf]
+    default_package_manager: dnf

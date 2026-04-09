@@ -1,0 +1,97 @@
+categories:
+  - id: terminal
+    display_name: "Terminal Emulators"
+  - id: browser
+    display_name: "Web Browsers"
+  - id: editor
+    display_name: "Text Editors"
+  - id: file_manager
+    display_name: "File Managers"
+  - id: shell
+    display_name: "Shell & Prompt"
+  - id: multimedia
+    display_name: "Multimedia"
+  - id: utility
+    display_name: "Utilities"
+
+apps:
+  - id: kitty
+    display_name: "Kitty"
+    category: terminal
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: true
+    clean_install_script: "scripts/apps/kitty-clean.sh"
+    hyunarch_script: "scripts/hyunarch/kitty.sh"
+
+  - id: alacritty
+    display_name: "Alacritty"
+    category: terminal
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: true
+    clean_install_script: "scripts/apps/alacritty-clean.sh"
+    hyunarch_script: "scripts/hyunarch/alacritty.sh"
+
+  - id: firefox
+    display_name: "Firefox"
+    category: browser
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: false
+    clean_install_script: "scripts/apps/firefox-clean.sh"
+    hyunarch_script: ""
+
+  - id: neovim
+    display_name: "Neovim"
+    category: editor
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: true
+    clean_install_script: "scripts/apps/neovim-clean.sh"
+    hyunarch_script: "scripts/hyunarch/neovim.sh"
+
+  - id: thunar
+    display_name: "Thunar"
+    category: file_manager
+    desktop_environments: [hyprland]
+    supports_clean_install: true
+    supports_hyunarch_config: false
+    clean_install_script: "scripts/apps/thunar-clean.sh"
+    hyunarch_script: ""
+
+  - id: dolphin
+    display_name: "Dolphin"
+    category: file_manager
+    desktop_environments: [kde]
+    supports_clean_install: true
+    supports_hyunarch_config: false
+    clean_install_script: "scripts/apps/dolphin-clean.sh"
+    hyunarch_script: ""
+
+  - id: nautilus
+    display_name: "Nautilus"
+    category: file_manager
+    desktop_environments: [gnome]
+    supports_clean_install: true
+    supports_hyunarch_config: false
+    clean_install_script: "scripts/apps/nautilus-clean.sh"
+    hyunarch_script: ""
+
+  - id: zsh
+    display_name: "Zsh + Oh My Zsh"
+    category: shell
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: true
+    clean_install_script: "scripts/apps/zsh-clean.sh"
+    hyunarch_script: "scripts/hyunarch/zsh.sh"
+
+  - id: starship
+    display_name: "Starship Prompt"
+    category: shell
+    desktop_environments: [all]
+    supports_clean_install: true
+    supports_hyunarch_config: true
+    clean_install_script: "scripts/apps/starship-clean.sh"
+    hyunarch_script: "scripts/hyunarch/starship.sh"

@@ -1,0 +1,15 @@
+desktops:
+  - id: hyprland
+    display_name: "Hyprland"
+    supported_distros: [arch, fedora]
+    description: "Tiling Wayland compositor"
+
+  - id: kde
+    display_name: "KDE Plasma"
+    supported_distros: [all]
+    description: "Full-featured desktop environment"
+
+  - id: gnome
+    display_name: "GNOME"
+    supported_distros: [all]
+    description: "Modern desktop environment"
