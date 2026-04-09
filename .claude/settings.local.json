@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x:*)",
+      "Bash(bash:*)",
+      "Bash(command -v shellcheck)",
+      "Bash(shellcheck --version)",
+      "Bash(command -v bash)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(shellcheck lib/*.sh main.sh)",
+      "Bash(grep:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ]
+  }
+}
