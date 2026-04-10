@@ -1,0 +1,7 @@
+FROM archlinux:latest
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm bash coreutils findutils grep sed shellcheck util-linux && \
+    pacman -Scc --noconfirm
+WORKDIR /hyunarch
+ENV HYUNARCH_DRY_RUN=1
+CMD ["bash"]

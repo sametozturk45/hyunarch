@@ -1,0 +1,6 @@
+FROM fedora:41
+RUN dnf install -y bash coreutils findutils grep sed ShellCheck util-linux && \
+    dnf clean all
+WORKDIR /hyunarch
+ENV HYUNARCH_DRY_RUN=1
+CMD ["bash"]
